@@ -3,8 +3,8 @@
 ## Unreleased
 
 ## v2.4.0 - 7 March 2026
-- Use `raw` option for `write` and `append` on Erlang
-- Add `delete_file` function for specifically deleting a file (uses `raw` on erlang as well)
+- Use `raw` option for write and append operations on Erlang
+- Add `delete_file` function for specifically deleting a file (uses `raw` on Erlang as well)
 
 ## v2.3.2 - 26 December 2025 
 - Fix bug where unknown errors were not properly converted to the Unknown variant in Erlang ffi.
