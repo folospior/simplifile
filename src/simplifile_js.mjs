@@ -398,3 +398,7 @@ function cast_error(error_code) {
       return new $simplifile.Unknown(error_code);
   }
 }
+
+export function resolve(file_path) {
+  return path.resolve(file_path);
+} 

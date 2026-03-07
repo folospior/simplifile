@@ -743,3 +743,33 @@ pub fn current_directory() -> Result(String, FileError) {
 
 @external(erlang, "file", "get_cwd")
 fn erl_do_current_directory() -> Result(List(UtfCodepoint), FileError)
+
+/// Converts a relative path to an absolute path.
+///
+/// Prepends the current working directory to the result if the path doesn't start at the drive root.
+/// (`/` or `c:/` or `d:/`, etc.)
+///
+/// Returns an error if the relative path could not be resolved.
+/// 
+/// # Example:
+/// ```gleam
+/// // on Unix(-like)
+/// assert resolve("/var/lib/../lucy/./gleam") == Ok("/var/lucy/gleam")
+/// 
+/// // on Windows
+/// assert resolve("/var/lib/../lucy/./gleam") == Ok("c:/var/lucy/gleam") 
+///
+/// // if the current working directory is `/home/something`
+/// assert resolve("../gleam") == Ok("/home/gleam") 
+///
+/// // Tried to go two directories back, but was only able to go one back. Path is unresolvable.
+/// assert resolve("/tmp/../..") == Error(Nil) 
+/// ```
+pub fn resolve(path path: String) -> Result(String, Nil) {
+  do_resolve(path)
+  |> filepath.expand
+}
+
+@external(erlang, "filename", "absname")
+@external(javascript, "./simplifile_js.mjs", "resolve")
+fn do_resolve(path: String) -> String

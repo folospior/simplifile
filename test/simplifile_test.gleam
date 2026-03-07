@@ -1,5 +1,6 @@
 import gleam/int
 import gleam/list
+import gleam/result
 import gleam/set
 import gleam/string
 import gleeunit
@@ -781,3 +782,9 @@ pub fn unknown_errors_return_unknown_test() {
 @external(erlang, "simplifile_erl", "create_directory")
 @external(javascript, "./simplifile_js.mjs", "createDirectory")
 fn create_directory_with_bad_arg(arg: #(Nil, Nil)) -> Result(Nil, FileError)
+
+pub fn resolve_empty_path_test() {
+  assert simplifile.resolve("")
+    == simplifile.current_directory()
+    |> result.replace_error(Nil)
+}
