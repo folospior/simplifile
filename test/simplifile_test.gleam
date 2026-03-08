@@ -1,6 +1,5 @@
 import gleam/int
 import gleam/list
-import gleam/result
 import gleam/set
 import gleam/string
 import gleeunit
@@ -784,7 +783,21 @@ pub fn unknown_errors_return_unknown_test() {
 fn create_directory_with_bad_arg(arg: #(Nil, Nil)) -> Result(Nil, FileError)
 
 pub fn resolve_empty_path_test() {
-  assert simplifile.resolve("")
-    == simplifile.current_directory()
-    |> result.replace_error(Nil)
+  assert simplifile.resolve("") == simplifile.current_directory()
+}
+
+pub fn resolve_relative_path_test() {
+  let assert Ok(actual) = simplifile.resolve("./simplifile_test.gleam")
+  let assert Ok(cwd) = simplifile.current_directory()
+  let expected = cwd <> "/simplifile_test.gleam"
+
+  assert actual == expected
+}
+
+// only works on Unix(-like) systems
+pub fn resolve_absolute_path_test() {
+  let initial = "/bin/hello"
+  let assert Ok(actual) = simplifile.resolve(initial)
+
+  assert initial == actual
 }
