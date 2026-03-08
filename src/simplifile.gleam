@@ -757,7 +757,7 @@ fn erl_do_current_directory() -> Result(List(UtfCodepoint), FileError)
 /// assert resolve("/var/lib/../lucy/./gleam") == Ok("/var/lucy/gleam")
 /// 
 /// // on Windows
-/// assert resolve("/var/lib/../lucy/./gleam") == Ok("c:/var/lucy/gleam") 
+/// assert resolve("c:\\var\\lib\\..\\lucy\\.\\gleam") == Ok("c:\\var\\lucy\\gleam") 
 ///
 /// // if the current working directory is `/home/something`
 /// assert resolve("../gleam") == Ok("/home/gleam") 
