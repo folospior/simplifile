@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Add `resolve` function, which resolves relative paths to absolute paths based on the current working directory.
 
 ## v2.3.2 - 26 December 2025 
 - Fix bug where unknown errors were not properly converted to the Unknown variant in Erlang ffi.
