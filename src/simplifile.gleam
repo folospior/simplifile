@@ -744,24 +744,23 @@ pub fn current_directory() -> Result(String, FileError) {
 @external(erlang, "file", "get_cwd")
 fn erl_do_current_directory() -> Result(List(UtfCodepoint), FileError)
 
-/// Converts a relative path to an absolute path.
-///
-/// Prepends the current working directory to the result if the path doesn't start at the drive root.
-/// (`/` or `c:/` or `d:/`, etc.). An empty path returns the current working directory.
+/// Converts a relative path to an absolute path which starts in the current working directory.
 ///
 /// Returns an error if the relative path could not be resolved.
 /// 
 /// # Example:
 /// ```gleam
-/// // on Unix(-like)
-/// assert resolve("/var/lib/../lucy/./gleam") == Ok("/var/lucy/gleam")
+/// // Resolving a relative path resolves the full absolute path.
+/// // Assume the current working directory is /home/lucy.
+/// assert resolve("./tmp/../gleam") == Ok("$/home/lucy/gleam")
+///
+/// // On Windows.
+/// // Assume the current working directory is c:\users\lucy.
+/// assert resolve(".\\tmp\\..\\gleam") == Ok("$c:\\users\\lucy\\gleam")
+///
+/// // Resolving an absolute path returns that absolute path.
+/// assert resolve("/tmp/gleam") == Ok("/tmp/gleam")
 /// 
-/// // on Windows
-/// assert resolve("c:\\var\\lib\\..\\lucy\\.\\gleam") == Ok("c:\\var\\lucy\\gleam") 
-///
-/// // if the current working directory is `/home/something`
-/// assert resolve("../gleam") == Ok("/home/gleam") 
-///
 /// // Tried to go two directories back, but was only able to go one back. Path is unresolvable.
 /// assert resolve("/tmp/../..") == Error(Enoent) 
 /// ```
