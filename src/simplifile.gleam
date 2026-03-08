@@ -747,7 +747,7 @@ fn erl_do_current_directory() -> Result(List(UtfCodepoint), FileError)
 /// Converts a relative path to an absolute path.
 ///
 /// Prepends the current working directory to the result if the path doesn't start at the drive root.
-/// (`/` or `c:/` or `d:/`, etc.)
+/// (`/` or `c:/` or `d:/`, etc.). An empty path returns the current working directory.
 ///
 /// Returns an error if the relative path could not be resolved.
 /// 
@@ -763,11 +763,12 @@ fn erl_do_current_directory() -> Result(List(UtfCodepoint), FileError)
 /// assert resolve("../gleam") == Ok("/home/gleam") 
 ///
 /// // Tried to go two directories back, but was only able to go one back. Path is unresolvable.
-/// assert resolve("/tmp/../..") == Error(Nil) 
+/// assert resolve("/tmp/../..") == Error(Enoent) 
 /// ```
-pub fn resolve(path path: String) -> Result(String, Nil) {
+pub fn resolve(path path: String) -> Result(String, FileError) {
   do_resolve(path)
   |> filepath.expand
+  |> result.replace_error(Enoent)
 }
 
 @external(erlang, "filename", "absname")
