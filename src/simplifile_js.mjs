@@ -399,6 +399,12 @@ function cast_error(error_code) {
   }
 }
 
-export function resolve(file_path) {
-  return path.resolve(file_path);
+/**
+ * Resolves a relative path to an absolute path based on the current working directory.
+ * 
+ * @param {string} filepath The file path to resolve
+ * @returns {string} The resolved file path
+ */
+export function resolve(filepath) {
+  return path.resolve(filepath);
 } 
