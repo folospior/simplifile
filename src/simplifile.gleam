@@ -754,10 +754,6 @@ fn erl_do_current_directory() -> Result(List(UtfCodepoint), FileError)
 /// // Assume the current working directory is /home/lucy.
 /// assert resolve("./tmp/../gleam") == Ok("$/home/lucy/gleam")
 ///
-/// // On Windows.
-/// // Assume the current working directory is c:\users\lucy.
-/// assert resolve(".\\tmp\\..\\gleam") == Ok("$c:\\users\\lucy\\gleam")
-///
 /// // Resolving an absolute path returns that absolute path.
 /// assert resolve("/tmp/gleam") == Ok("/tmp/gleam")
 /// 
