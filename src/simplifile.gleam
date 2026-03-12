@@ -752,7 +752,7 @@ fn erl_do_current_directory() -> Result(List(UtfCodepoint), FileError)
 /// ```gleam
 /// // Resolving a relative path resolves the full absolute path.
 /// // Assume the current working directory is /home/lucy.
-/// assert resolve("./tmp/../gleam") == Ok("$/home/lucy/gleam")
+/// assert resolve("./tmp/../gleam") == Ok("/home/lucy/gleam")
 ///
 /// // Resolving an absolute path returns that absolute path.
 /// assert resolve("/tmp/gleam") == Ok("/tmp/gleam")
